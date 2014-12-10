@@ -63,7 +63,6 @@ desde la web fácilmente. Estos suelen seguir el mismo modelo freemium:
 diferentes tamaños o instancias son gratuitas o tienen un coste; en
 algunos casos cualquier instancia tiene un coste. 
 
-
 ### Interfaces REST simples con express
 
 Para diseñar interfaces REST de forma bastante simple, hay un [módulo de
@@ -119,6 +118,12 @@ tipo de datos que son procesados para enviar al cliente la respuesta
 correcta. Tampoco hace falta establecer explícitamente el tipo MIME que
 se devuelve, encargándose `send` del mismo.
 
+En los dos casos, las peticiones devuelven JSON. Una aplicación de
+este tipo puede devolver cualquier cosa, HTML o texto, pero conviene
+acostumbrarse a pensar en estas aplicaciones como servidores a los
+cuales se va a acceder desde un cliente, sea un programa que use un
+cliente REST o sea desde el navegador usando jQuery o Javascript. 
+
 >Realizar una aplicación básica que use `express` para devolver alguna
 >estructura de datos del model que se viene usando en el curso.
 
@@ -172,16 +177,53 @@ siguiente](https://github.com/JJ/node-app-cc/blob/master/index.js):
 
 
 Este [programa
-(express-count.js)](https://github.com/JJ/curso-js/tree/master/code/express-count.js%27)
+(express-count.js)](https://github.com/JJ/node-app-cc/blob/master/index.js)
 introduce otras dos órdenes REST: PUT, que, como recordamos, sirve para
 crear nuevos recurso y es idempotente (se puede usar varias veces con el
-mismo resultado), y además POST. Esa orden la vamos a usar para crear
-contadores a los que posteriormente accederemos con get. PUT no es una
+mismo resultado) y además GET. Esa orden la vamos a usar para crear
+contadores a los que posteriormente accederemos con `get`. PUT no es una
 orden a la que se pueda acceder desde el navegador, así que para usarla
 necesitaremos hacer algo así desde la línea de órdenes:
-`curl -X PUT http://127.0.0.1:8080/contador/primero` para lo que
+`curl -X PUT http://127.0.0.1:8080/porra/local/visitante/Copa/2013` para lo que
 previamente habrá que haber instalado `curl`, claro. Esta orden llama a
-PUT sobre el programa, y crea un contador que se llama `primero`. Una
+PUT sobre el programa, y crea un partido con esas características. Una
 vez creado, podemos acceder a él desde la línea de órdenes o desde el
-navegador (desde el navegador se generan peticiones GET y POST
-solamente).
+navegador; la dirección `http://127.0.0.1:8080/porras` nos devolverá
+en formato JSON todo lo que hayamos almacenado hasta el momento.
+
+## Probando nuestra aplicación en la nube
+
+Porque esté en la nube no significa que no tengamos que testearla como cualquier hija de vecina. En este caso no vamos a usar tests unitarios, sino test funcionales (o como se llamen); de lo que se trata es que tenemos que levantar la web y que vaya todo medianamente bien.
+
+Los tests podemos integrarlos, como es natural, en el mismo marco que el resto de la aplicación, sólo que tendremos que usar librerías de aserciones ligeramente diferentes, en este caso `supertest`
+
+	var request = require('supertest'), 
+	app = require('../index.js');
+
+	describe( "PUT porra", function() {
+		it('should create', function (done) {
+		request(app)
+			.put('/porra/uno/dos/tres/4')
+			.expect('Content-Type', /json/)
+			.expect(200,done);
+		});
+	});
+
+(que tendrá que estar incluido en el directorio `test/`, como el resto). En vez de ejecutar la aplicación (que también podríamos hacerlo), lo que hacemos es que añadimos al final de `index.js` la línea:
+
+	module.exports = app;
+
+con lo que se exporta la app que se crea; `require` ejecuta el código y recibe la variable que hemos exportado, que podemos usar como si se tratara de parte de esta misma aplicación. `app` en este test, por tanto, contendrá lo mismo que en la aplicación principal, `index.js`. Usamos el mismo estilo de test con `mocha` que [ya se ha visto](http://jj.github.io/desarrollo-basado-pruebas) pero usamos funciones específicas:
+
+* `request` hace una llamada sobre `app` como si la hiciéramos *desde fuera*; `put`, por tanto, llamará a la ruta correspondiente, que crea un partido sobre el que apostar.
+* `expect` expresa qué se puede esperar de la respuesta. Por ejemplo, se puede esperar que sea de tipo JSON (porque es lo que enviamos, un JSON del partido añadido) y además que sea de tipo '200', respuesta correcta. Y como esta es la última de la cadena, llamamos a `done` que es en realidad una función que usa como parámetro el callback.
+
+Podemos hacer más pruebas, usando get, por ejemplo. Pero se deja como ejercicio al alumno.
+
+Estas pruebas permiten que no nos encontremos con sorpresas una vez que despeguemos en el PaaS. Así sabemos que, al menos, todas las rutas que hemos creado funcionan correctamente. 
+
+> Crear pruebas de las rutas de la aplicación. 
+
+## Desplegando en el PaaS
+
+Podemos, por ejemplo desplegarlo en heroku. 
