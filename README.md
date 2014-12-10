@@ -59,3 +59,125 @@ desde la web fácilmente. Estos suelen seguir el mismo modelo freemium:
 diferentes tamaños o instancias son gratuitas o tienen un coste; en
 algunos casos cualquier instancia tiene un coste. 
 
+
+### Interfaces REST simples con express
+
+Para diseñar interfaces REST de forma bastante simple, hay un [módulo de
+node.js llamado express](http://expressjs.com/). La idea de este módulo
+es reflejar en el código, de la forma más natural posible, el diseño del
+interfaz REST.
+
+Pero primero hay que instalarlo. Node.js tiene un sistema de gestión de
+módulos bastante simple llamado [npm](http://npmjs.org/) que ya hemos usado. Tras seguir las instrucciones en el 
+sitio para instalarlo (o, en el caso de ubuntu, instalarlo desde
+Synaptic o con apt-get), vamos al directorio en el que vayamos a crear
+el programa y escribimos
+
+`npm install express --save`
+
+en general, no hace falta tener permiso de administrador, sólo el
+necesario para crear, leer y ejecutar ficheros en el directorio en el
+que se esté trabajando. `--save` guarda la dependencencia en `package.json` siempre que esté en el mismo directorio, que convendría que estuviera, así no tenemos que recordar qué es lo que está instalado. 
+
+Tras la instalación, el programa que hemos visto más arriba se
+transforma en el siguiente:
+
+	#!/usr/bin/env node
+
+	var express=require('express');
+	var app = express();
+	var port = process.env.PORT || 8080;
+
+	app.get('/', function (req, res) {
+		res.send( { Portada: true } );
+	});
+
+	app.get('/proc', function (req, res) {
+		res.send( { Portada: false} );
+	});  
+
+	app.listen(port); 
+	console.log('Server running at http://127.0.0.1:'+port+'/');
+
+
+Para empezar, `express` nos evita todas las molestias de tener que
+procesar nosotros la línea de órdenes: directamente escribimos una
+función para cada respuesta que queramos tener, lo que facilita mucho la
+programación. Las órdenes reflejan directamente las órdenes de
+HTTP a las que queremos responder, en este caso `get` y por
+otro lado se pone directamente la función para cada una de ellas. Dentro
+de cada función de respuesta podemos procesar las órdenes que queramos.
+
+Por otro lado, se usa `send`  para enviar el resultado,
+[una orden más flexible](http://expressjs.com/guide.html#http-methods)
+que admite todo
+tipo de datos que son procesados para enviar al cliente la respuesta
+correcta. Tampoco hace falta establecer explícitamente el tipo MIME que
+se devuelve, encargándose `send` del mismo.
+
+>Realizar una aplicación básica que use `express` para devolver alguna
+>estructura de datos del model que se viene usando en el curso.
+
+Con el mismo `express` se pueden generar aplicaciones no tan básicas
+ejecutándolo de la forma siguiente:
+
+`node_modules/express/bin/express prueba-rest`{.ejemplo}
+
+Se indica el camino completo a la aplicación binaria, que sería el
+puesto. Con esto se genera un directorio prueba-rest. Cambiándoos al
+mismo y escribiendo simplemente `npm install` se instalarán las
+dependencias necesarias. La aplicación estará en el fichero `index.js`,
+lista para funcionar, pero evidentemente habrá que adaptarla a nuestras
+necesidades particulares.
+
+El acceso a los parámetros de la llamada y la realización de diferentes
+actividades según el mismo se denomina enrutado. En express se pueden
+definir los parámetros de forma bastante simple, usando marcadores
+precedidos por `:`. Por ejemplo, si queremos tener diferentes contadores
+podríamos usar el [programa
+siguiente](https://github.com/JJ/node-app-cc/blob/master/index.js):
+
+	var express = require('express');
+	var app = express();
+
+	// recuerda ejecutar antes grunt creadb
+	var db_file = "porrio.db.sqlite3";
+	var apuesta = require("./Apuesta.js");
+	var porra = require("./Porra.js");
+
+	var porras = new Array;
+
+	app.set('port', (process.env.PORT || 5000));
+	app.use(express.static(__dirname + '/public'));
+
+	app.put('/porra/:local/:visitante/:competition/:year', function( req, response ) {
+		var nueva_porra = new porra.Porra(req.params.local,req.params.visitante,
+						  req.params.competition, req.params.year );
+		porras.push(nueva_porra);
+		response.send(nueva_porra);
+	});
+
+	app.get('/porras', function(request, response) {
+		response.send( porras );
+	});
+
+	app.listen(app.get('port'), function() {
+	  console.log("Node app is running at localhost:" + app.get('port'));
+	});
+
+
+
+Este [programa
+(express-count.js)](https://github.com/JJ/curso-js/tree/master/code/express-count.js%27)
+introduce otras dos órdenes REST: PUT, que, como recordamos, sirve para
+crear nuevos recurso y es idempotente (se puede usar varias veces con el
+mismo resultado), y además POST. Esa orden la vamos a usar para crear
+contadores a los que posteriormente accederemos con get. PUT no es una
+orden a la que se pueda acceder desde el navegador, así que para usarla
+necesitaremos hacer algo así desde la línea de órdenes:
+`curl -X PUT http://127.0.0.1:8080/contador/primero` para lo que
+previamente habrá que haber instalado `curl`, claro. Esta orden llama a
+PUT sobre el programa, y crea un contador que se llama `primero`. Una
+vez creado, podemos acceder a él desde la línea de órdenes o desde el
+navegador (desde el navegador se generan peticiones GET y POST
+solamente).
