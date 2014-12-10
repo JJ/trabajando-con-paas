@@ -18,6 +18,9 @@ module.exports = function(grunt) {
             },
             db: {
 		command: 'sqlite3 porrio.db.sqlite3 < porrio.sql'
+            },
+	    clean: {
+		command: 'rm porrio.db.sqlite3'
             }
 	}
     });
@@ -30,5 +33,6 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['docco']);
 
     // Otras tareas
-    grunt.registerTask('creadb', ['shell']);
+    grunt.registerTask('creadb', ['shell:db']);
+    grunt.registerTask('borradb', ['shell:clean']);
 };
