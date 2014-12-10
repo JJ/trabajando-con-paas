@@ -9,6 +9,7 @@ exports.Porra = function (local,visitante,competition,year) {
     // functions
     this.nueva_apuesta = nueva_apuesta;
     this.las_apuestas = las_apuestas;
+    this.inserta_db = inserta_db;
 }
 
 function nueva_apuesta( apuesta ) {
@@ -19,3 +20,11 @@ function las_apuestas () {
     return this.apuestas;
 }
 
+function inserta_db( db, tabla ) {
+    if ( !db) {
+	throw new Error("No se ha definido BD");
+    };
+    var stmt = db.prepare("INSERT INTO "+ tabla + " VALUES (?, ?,?,?,?)");
+    stmt.run( this.ID, this.local, this.visitante, this.competition, this.year );
+    stmt.finalize();
+}
