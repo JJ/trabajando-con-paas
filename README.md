@@ -1,7 +1,3 @@
----
-layout: index
----
-
 Trabajando con Plataformas como servicio.
 ===================
 
