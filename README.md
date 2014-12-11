@@ -429,3 +429,26 @@ es bastante directo. Primero, hay que tener en cuenta que en el PaaS,
 como debería de ser obvio, se trata de aplicaciones web. Por eso la
 aplicación más simple que se propone usa ya `express` (o, para el
 caso, cualquier otro marco de servicios REST).
+
+1. Descarga
+   [el *cinturón de herramientas* de Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
+2. Haz *login* con `heroku login`.
+3. Descarga
+   [la aplicación de ejemplo para node](https://github.com/heroku/node-js-getting-started.git). Es
+   una aplicación simple de node y express. Heroku tiene una serie de
+   ejemplos para diferentes lenguajes de programación. Por ejemplo,
+   [para PHP](https://devcenter.heroku.com/articles/getting-started-with-php#prepare-the-app). Heroku
+   admite [7 lenguajes, Scala, Clojure, Java, Ruby y Python](https://devcenter.heroku.com/start)
+4. Con `heroku create` (dentro del directorio descargado) se crea la
+   aplicación en heroku. Previamente lo único que había era un repo,
+   con esta orden se crea una aplicación en heroku y se conecta con el
+   repositorio descargado; esencialmente lo que se hace es que se
+   añade un destino, `heroku` al que podemos hacer push. Con esto se
+   crea una app de nombre aleatorio, que luego podremos modificar.
+Puedes darle también un nombre a la aplicación y asignarle un servidor
+   en Europa (legalmente obligatorio) escribiendo `heroku apps:create
+   --region eu nombre_muy_chulo` Si te asignan un nombre puedes
+   cambiarlo también más adelante, en la web y en el repo.
+
+> Instalar y echar a andar tu primera aplicación en heroku.
+
