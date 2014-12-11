@@ -57,9 +57,204 @@ En cualquier caso, los PaaS suelen tener un panel de control que
 permite hacer ciertas cosas como configurar *plugins* o *add-ons*
 desde la web fácilmente. Estos suelen seguir el mismo modelo freemium:
 diferentes tamaños o instancias son gratuitas o tienen un coste; en
-algunos casos cualquier instancia tiene un coste. 
+algunos casos cualquier instancia tiene un coste.
 
-### Interfaces REST simples con express
+En general, el enfoque para este tipo de herramientas (y para casi
+todo el desarrollo web moderno) es trabajar con servidores REST que
+envíen al cliente algún tipo de información de la que este estará
+encargado y plasmará. También eso facilita el desarrollo de cualquier
+tipo de cliente, móvil, navegador o incluso middleware, que puede
+estar incluido en la misma aplicación. Por eso haremos un pequeño
+recorrido por el concepto de servicios REST, basados en los verbos del
+protocolo HTTP.
+
+## El protocolo HTTP y sus múltiples posibilidades
+
+El protocolo [HTTP](http://es.wikipedia.org/wiki/HTTP) es uno de los
+protocolos más infrautilizados de la historia. A pesar de que ofrece
+múltiples posibilidades y versiones, se usa simplemente para enviar y
+recibir información de un servidor. Para recibir información se usa la
+orden `GET`, y para enviar, la orden `POST`. Pero también hay otras
+posibilidades, `PUT` (que envía un recurso determinado al servidor),
+`DELETE` (que borra un recurso del servidor) e incluso `HEAD` (igual que
+`GET`, pero sin el cuerpo de la respuesta).
+
+El protocolo [HTTP](#HTTP) gira alrededor del concepto de *recurso*: un
+recurso en un servidor está identificado por un URI, y es la mínima
+acción que un servidor puede realizar. Como características adicionales,
+la acción de algunas peticiones (`GET` y `HEAD`) debe ser *segura*, es
+decir, dejar al servidor en el mismo estado que antes de la petición.
+Otras acciones, como `PUT` y `DELETE`, se denominan *idempotentes*: el
+hacer varias veces la misma petición tiene el mismo efecto que el
+hacerla una sola vez.
+
+[HTTP](#HTTP) funciona puramente como cliente-servidor: se hace una
+petición, y se espera la respuesta. Lo que no quiere decir que no se
+puedan hacer peticiones concurrentes y asíncronas; sin embargo, esas
+peticiones tendrán que estar dentro del marco de una página web (o sea,
+una aplicación).
+
+A las peticiones el servidor responde con una serie de [códigos
+estándar](http://en.wikipedia.org/wiki/List_of_HTTP_status_codes), que
+usan la misma presentación que la petición: texto puro y duro. Cuando
+todo va bien, la respuesta es `200 OK`; los códigos `2xx` corresponden,
+en general, a una petición hecha, y fuera de los 2xx existe el caos y el
+descontrol. En especial, un código 500 implica error en el servidor.
+Evidentemente, estos mensajes están pensados para que los lea un cliente
+en el navegador; sin embargo, cuando trabajamos directamente sobre este
+protocolo, nuestro programa deberá ser consciente de ellos y responder
+de forma adecuada como si se tratara de una llamada a otro
+procedimiento.
+
+Las aplicaciones construidas alrededor del protocolo HTTP y sus
+características se suelen llamar [aplicaciones
+RESTful](http://en.wikipedia.org/wiki/Representational_State_Transfer)
+(REST == REpresentational State Transfer). La idea de REST es que se
+transfiere el estado del servidor al cliente. Un recurso tiene una
+representación, que se transfiere al cliente por una petición; esa
+representación se puede cambiar con diferentes operaciones. Sin embargo,
+con esto sólo estamos especificando la capa más baja del servicio web;
+hace falta una capa de mensajería. Y esta capa de mensajería se suele
+denominar [POX](http://es.wikipedia.org/wiki/POX), o *Plain Old XML*
+(XML *de toda la vida*), es decir XML bien formado con algunas
+ampliaciones, pero sin ningún tipo de validación. En algunos casos se
+usa texto directamente, aunque también se puede usar JSON o cualquier
+otro tipo de capa.
+
+De hecho, las aplicaciones [REST suelen ser más
+populares](http://www.oreillynet.com/pub/wlg/3005) que otros servicios
+web, por el simple hecho de que es muy fácil construir el interfaz:
+simplemente creando una cadena determinada. Eso los hace también más
+rápidos, aunque sean menos flexibles.
+
+Vamos a ver un interfaz de este tipo relativamente reciente: el de
+[Twitter](http://twitter.com/), un sitio *social* que transmite a todo
+el que quiera escucharlo las líneas de estado (mensajes de menos de 200
+caracteres). El [API de Twitter](https://dev.twitter.com/docs) es
+[RESTful](#RESTful), y está bastante bien diseñada. Para usarla es
+necesario darse de alta; desde la versión 1.1 del interfaz todas las
+peticiones necesitan autenticación. Así que usaremos [otro interfaz, el
+de GitHub](http://developer.github.com/v3/), para hacer pruebas. Por
+ejemplo, esta petición te dará todas las *organizaciones* a las que
+pertenece el usuario [JJ](http://github.com/JJ):
+
+`bash$ curl -i https://api.github.com/users/JJ/orgs`{.ejemplo}
+
+Para llevar a cabo este ejemplo hay que instalar `curl`, un programa que
+en una primera aproximación es simplemente un descargador de páginas web
+pero que en segunda se puede usar como un completo cliente
+[REST](#REST); en este caso `-i` te incluye las cabeceras en la salida,
+con lo que producirá algo de este estilo
+
+	HTTP/1.1 200 OK
+	Server: GitHub.com
+	Date: Thu, 11 Dec 2014 09:57:32 GMT
+	Content-Type: application/json; charset=utf-8
+	Status: 200 OK
+	X-RateLimit-Limit: 60
+	X-RateLimit-Remaining: 59
+	X-RateLimit-Reset: 1418295452
+	Cache-Control: public, max-age=60, s-maxage=60
+	ETag: "4bb99f4903f3cfdd807ecd91fcab8c5b"
+	Vary: Accept
+	X-GitHub-Media-Type: github.v3
+	X-XSS-Protection: 1; mode=block
+	X-Frame-Options: deny
+	Content-Security-Policy: default-src 'none'
+	Content-Length: 1437
+	Access-Control-Allow-Credentials: true
+	Access-Control-Expose-Headers: ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+	Access-Control-Allow-Origin: *
+	X-GitHub-Request-Id: 96D6CD29:6713:5D13B3E:54896A8C
+	Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+	X-Content-Type-Options: nosniff
+	Vary: Accept-Encoding
+	X-Served-By: 2811da37fbdda4367181b328b22b2499
+
+	[
+	  {
+		"login": "openkratio",
+		"id": 2310256,
+		"url": "https://api.github.com/orgs/openkratio",
+		"repos_url": "https://api.github.com/orgs/openkratio/repos",
+		"events_url": "https://api.github.com/orgs/openkratio/events",
+		"members_url": "https://api.github.com/orgs/openkratio/members{/member}",
+		"public_members_url": "https://api.github.com/orgs/openkratio/public_members{/member}",
+		"avatar_url": "https://avatars.githubusercontent.com/u/2310256?v=3"
+	  },
+	  {
+		"login": "CANUBE",
+		"id": 3839808,
+		"url": "https://api.github.com/orgs/CANUBE",
+		"repos_url": "https://api.github.com/orgs/CANUBE/repos",
+		"events_url": "https://api.github.com/orgs/CANUBE/events",
+		"members_url": "https://api.github.com/orgs/CANUBE/members{/member}",
+		"public_members_url": "https://api.github.com/orgs/CANUBE/public_members{/member}",
+		"avatar_url": "https://avatars.githubusercontent.com/u/3839808?v=3"
+	  },
+	  {
+		"login": "MusesProject",
+		"id": 6651546,
+		"url": "https://api.github.com/orgs/MusesProject",
+		"repos_url": "https://api.github.com/orgs/MusesProject/repos",
+		"events_url": "https://api.github.com/orgs/MusesProject/events",
+		"members_url": "https://api.github.com/orgs/MusesProject/members{/member}",
+		"public_members_url": "https://api.github.com/orgs/MusesProject/public_members{/member}",
+		"avatar_url": "https://avatars.githubusercontent.com/u/6651546?v=3"
+	  }
+	]
+
+La idea de [REST](#REST) desde el punto de vista del servidor es usar el
+URL para representar recursos, y las propias órdenes de HTTP para
+ejercitar acciones sobre ese recursos. En general, `GET` servirá para
+transferir la representación de un recurso del cliente al servidor,
+`POST` cambiará el estado de un recurso, `PUT` (que no se suele usar tan
+a menudo) directamente cambiaría la representación del recurso, mientras
+que `DELETE` borraría el recurso; a estas arquitecturas se les suele
+denominar también *arquitecturas orientadas al recurso*
+
+Por eso también se suelen proponer una serie de [buenas prácticas para
+diseñar un interfaz
+REST](http://en.wikipedia.org/wiki/Representational_State_Transfer#Guiding_principles_of_the_interface):
+
+-   La funcionalidad está divida en recursos
+-   Se usa una sintaxis universal basada en URL
+-   Todos los recursos tienen un interfaz uniforme, con un conjunto bien
+    definido de operaciones y un conjunto restringido de tipos de
+    contenido. En particular, este interfaz esconde los detalles de la
+    implementación.
+
+Por ejemplo, supongamos que hay que diseñar un interfaz REST para una
+quiniela deportiva. Hay una quiniela por jornada, y cada jornada tiene
+15 partidos. Supongamos que se conocen los partidos de antemano, y que
+sólo se pueden proponer resultados por parte de un usuario. Se podría
+diseñar el interfaz de la forma siguiente:
+
+-   Quiniela de una jornada:
+    `http://jost.com/quiniela/jornada/[número de       jornada]`
+-   Un partido de una quiniela:
+    `http://jost.com/quiniela/jornada/[número de       jornada]/partido/[número de partido]`
+-   Para los resultados, habría que sustituir `quiniela` por
+    `resultados`. Adicionalmente, añadir `usuario/[nombre de usuario]`,
+    para recuperar los resultados propuestos por un usuario determinado.
+    Por ejemplo, Resultados:
+    `http://jost.com/resultados/jornada/22/usuario/foobar`
+
+Las operaciones HTTP que se van a usar vienen determinadas por el diseño
+del interfaz. Por ejemplo, para proponer un resultado determinado habría
+que hacer una petición POST con dos parámetros: el nombre de usuario y
+el resultado propuesto. El servidor responderá con un mensaje estándar
+HTTP y un fichero XML si se ha podido hacer correctamente, y con un
+error HTTP si no.
+
+Si se trabaja con servidores tradicionales como Apache, es
+relativamente fácil crear interfaces REST con esta sintaxis para
+programas tradicionales. Sin embargo, es normal que el servidor web
+esté incluido en el marco de desarrollo e incluya una forma fácil de
+crear estas *rutas*, que equivalen a llamadas al API en REST.
+
+
+## Interfaces REST simples con express
 
 Para diseñar interfaces REST de forma bastante simple, hay un [módulo de
 node.js llamado express](http://expressjs.com/). La idea de este módulo
@@ -222,4 +417,15 @@ Estas pruebas permiten que no nos encontremos con sorpresas una vez que despegue
 
 ## Desplegando en el PaaS
 
-Podemos, por ejemplo desplegarlo en heroku. 
+Podemos, por ejemplo, desplegarlo en Heroku.
+
+> Sitios como Openshift or Nodester tienen sistemas también similares,
+> pero por lo pronto vamos a usar este, que tiene un sistema un poco
+> más abierto y completo.
+
+Tras abrir una cuenta en Heroku, crear una
+[aplicación en Node](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction)
+es bastante directo. Primero, hay que tener en cuenta que en el PaaS,
+como debería de ser obvio, se trata de aplicaciones web. Por eso la
+aplicación más simple que se propone usa ya `express` (o, para el
+caso, cualquier otro marco de servicios REST).
