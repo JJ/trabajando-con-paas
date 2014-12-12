@@ -450,5 +450,7 @@ Puedes darle también un nombre a la aplicación y asignarle un servidor
    --region eu nombre_muy_chulo` Si te asignan un nombre puedes
    cambiarlo también más adelante, en la web y en el repo.
 
+Esto crea una aplicación en la web de Heroku, que al hacer `git push heroku master` se pondrá en marcha. 
+
 > Instalar y echar a andar tu primera aplicación en heroku.
 
