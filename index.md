@@ -142,7 +142,7 @@ de GitHub](http://developer.github.com/v3/), para hacer pruebas. Por
 ejemplo, esta petición te dará todas las *organizaciones* a las que
 pertenece el usuario [JJ](http://github.com/JJ):
 
-`bash$ curl -i https://api.github.com/users/JJ/orgs`{.ejemplo}
+`bash$ curl -i https://api.github.com/users/JJ/orgs`
 
 Para llevar a cabo este ejemplo hay que instalar `curl`, un programa que
 en una primera aproximación es simplemente un descargador de páginas web
@@ -325,7 +325,7 @@ cliente REST o sea desde el navegador usando jQuery o Javascript.
 Con el mismo `express` se pueden generar aplicaciones no tan básicas
 ejecutándolo de la forma siguiente:
 
-`node_modules/express/bin/express prueba-rest`{.ejemplo}
+`node_modules/express/bin/express prueba-rest`
 
 Se indica el camino completo a la aplicación binaria, que sería el
 puesto. Con esto se genera un directorio prueba-rest. Cambiándoos al
