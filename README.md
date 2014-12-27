@@ -1,11 +1,12 @@
-Trabajando con Plataformas como servicio.
+Trabajando con PaaS: Plataformas como servicio
 ===================
 
 ##Objetivos
 
-1. Conocer herramientas de desarrollo rápido de aplicaciones web en node.
+1. Conocer herramientas de desarrollo rápido de aplicaciones web en `node`.
 2. Conocer las diferentes plataformas *freemium* PaaS existentes.
 3. Entender el concepto de PaaS y como se relaciona con los otros niveles de la nube.
+4. Comenzar a usar un PaaS.
 
 ## Introducción
 
@@ -138,7 +139,7 @@ de GitHub](http://developer.github.com/v3/), para hacer pruebas. Por
 ejemplo, esta petición te dará todas las *organizaciones* a las que
 pertenece el usuario [JJ](http://github.com/JJ):
 
-`bash$ curl -i https://api.github.com/users/JJ/orgs`{.ejemplo}
+`bash$ curl -i https://api.github.com/users/JJ/orgs`
 
 Para llevar a cabo este ejemplo hay que instalar `curl`, un programa que
 en una primera aproximación es simplemente un descargador de páginas web
@@ -321,7 +322,7 @@ cliente REST o sea desde el navegador usando jQuery o Javascript.
 Con el mismo `express` se pueden generar aplicaciones no tan básicas
 ejecutándolo de la forma siguiente:
 
-`node_modules/express/bin/express prueba-rest`{.ejemplo}
+`node_modules/express/bin/express prueba-rest`
 
 Se indica el camino completo a la aplicación binaria, que sería el
 puesto. Con esto se genera un directorio prueba-rest. Cambiándoos al
@@ -450,5 +451,30 @@ Puedes darle también un nombre a la aplicación y asignarle un servidor
    --region eu nombre_muy_chulo` Si te asignan un nombre puedes
    cambiarlo también más adelante, en la web y en el repo.
 
+Esto crea una aplicación en la web de Heroku, que al hacer `git push heroku master` se pondrá en marcha. 
+
 > Instalar y echar a andar tu primera aplicación en heroku.
+
+Sólo hemos, por lo pronto, desplegado la aplicación por defecto. Se
+habrá generado un fichero denominado `index.js` que será,
+efectivamente, el que se ejecute. Pero ¿cómo sabe Heroku qué es lo que
+hay que ejecutar? Si miramos el fichero `Procfile` encontraremos algo
+así
+
+```
+web: node index.js
+```
+
+Este [Procfile](https://devcenter.heroku.com/articles/procfile) se usa
+para indicar a heroku qué es lo que tiene que ejecutar. En casi todos
+los casos se tratará de una aplicación web, y por tanto la parte
+izquierda, `web:` será común. Dependiendo del lenguaje, variará la
+parte derecha; en este caso le estamos indicando la línea de órdenes
+que hay que ejecutar para *levaltar* la web que hemos creado.
+
+Localmente, se recrea (aproximadamente) el entorno de heroku usando
+Foreman. Para ejecutar localmente nuestra aplicación ejecutaremos
+`foreman start web`. `foreman` leerá el `procfile` y ejecutará la
+tarea correspondiente a `web`, en este caso `index.js`.  Podemos
+interrumpirlo simplemente tecleanco Ctrl-C.
 
