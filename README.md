@@ -1,11 +1,12 @@
-Trabajando con Plataformas como servicio.
+Trabajando con PaaS: Plataformas como servicio
 ===================
 
 ##Objetivos
 
-1. Conocer herramientas de desarrollo rápido de aplicaciones web en node.
+1. Conocer herramientas de desarrollo rápido de aplicaciones web en `node`.
 2. Conocer las diferentes plataformas *freemium* PaaS existentes.
 3. Entender el concepto de PaaS y como se relaciona con los otros niveles de la nube.
+4. Comenzar a usar un PaaS.
 
 ## Introducción
 
@@ -453,4 +454,27 @@ Puedes darle también un nombre a la aplicación y asignarle un servidor
 Esto crea una aplicación en la web de Heroku, que al hacer `git push heroku master` se pondrá en marcha. 
 
 > Instalar y echar a andar tu primera aplicación en heroku.
+
+Sólo hemos, por lo pronto, desplegado la aplicación por defecto. Se
+habrá generado un fichero denominado `index.js` que será,
+efectivamente, el que se ejecute. Pero ¿cómo sabe Heroku qué es lo que
+hay que ejecutar? Si miramos el fichero `Procfile` encontraremos algo
+así
+
+```
+web: node index.js
+```
+
+Este [Procfile](https://devcenter.heroku.com/articles/procfile) se usa
+para indicar a heroku qué es lo que tiene que ejecutar. En casi todos
+los casos se tratará de una aplicación web, y por tanto la parte
+izquierda, `web:` será común. Dependiendo del lenguaje, variará la
+parte derecha; en este caso le estamos indicando la línea de órdenes
+que hay que ejecutar para *levaltar* la web que hemos creado.
+
+Localmente, se recrea (aproximadamente) el entorno de heroku usando
+Foreman. Para ejecutar localmente nuestra aplicación ejecutaremos
+`foreman start web`. `foreman` leerá el `procfile` y ejecutará la
+tarea correspondiente a `web`, en este caso `index.js`.  Podemos
+interrumpirlo simplemente tecleanco Ctrl-C.
 
