@@ -19,7 +19,14 @@ PaaS proporciona una pila que incluye, generalmente, almacenamiento de
 datos, un marco concreto para trabajar (tal como Django o Ruby on
 Rails) y, adicionalmente, un servidor web. 
 
-Esto conlleva una cierta falta de flexibilidad: se pueden usar las pilas que hay y el usuario sólo puede subir su aplicación que use esa pila, no instalar elementos adicionales que necesiten permisos de superusuario. Pero, por otro lado, ofrece la comodidad de tener que concentrarse sólo en la aplicación en sí y no en la infraestructura. Es, por eso, menos *DevOps* que una solución *IaaS*, pero por otro lado también tiene una parte que es la configuración y despliegue de la aplicación en sí y los tests que se vayan a usar.
+Esto conlleva una cierta falta de flexibilidad: se pueden usar las
+pilas que hay y el usuario sólo puede subir su aplicación que use esa
+pila, no instalar elementos adicionales que necesiten permisos de
+superusuario. Pero, por otro lado, ofrece la comodidad de tener que
+concentrarse sólo en la aplicación en sí y no en la
+infraestructura. Es, por eso, menos *DevOps* que una solución *IaaS*,
+pero por otro lado también tiene una parte que es la configuración y
+despliegue de la aplicación en sí y los tests que se vayan a usar. 
 
 Usando un servicio PaaS
 -----
@@ -496,6 +503,24 @@ el registro o *log* de la misma de forma más amigable.
 >local con `foreman`. Al final de cada modificación, los tests tendrán
 >que funcionar correctamente; cuando se pasen los tests, se puede
 >volver a desplegar en heroku.
+
+Si está `package.json` bien configurado, por ejemplo, de esta forma
+
+```javascript
+  "scripts": {
+    "test": "mocha",
+    "start": "node index.js"
+  },
+```
+
+se puede arrancar también la aplicación, sin ningún tipo de
+envoltorio, simplemente con `npm start`, que ejecutará lo que hay a su
+izquierda. La clave `scripts` de `package.json` contiene una serie de
+tareas o procesos que se pueden comenzar; en ese sentido, la
+funcionalidad se solapa con el `Gruntfile` que se ha visto
+anteriormente.
+
+>Siempre hay más de una manera de hacer las cosas.
 
 Ahora tenemos que gestionar los dos repositorios de `git` que tenemos.
 
