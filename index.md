@@ -501,3 +501,5 @@ el registro o *log* de la misma de forma más amigable.
 >que funcionar correctamente; cuando se pasen los tests, se puede
 >volver a desplegar en heroku.
 
+Ahora tenemos que gestionar los dos repositorios de `git` que tenemos.
+
