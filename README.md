@@ -10,7 +10,14 @@ Trabajando con PaaS: Plataformas como servicio
 
 ## Introducción
 
-Cuando uno quiere parte del trabajo ya hecho, o al menos preparado para hacer con la pulsación de un botón, a la vez que tiene flexibilidad para trabajar con marcos de aplicaciones más allá de lo que ofrece programar *plugins* (como en el SaaS), necesita un [Platform as a Service o PaaS](http://en.wikipedia.org/wiki/Platform_as_a_service). Un PaaS proporciona una pila que incluye, generalmente, almacenamiento de datos, un marco concreto para trabajar (tal como Django o Ruby on Rails) y, adicionalmente, un servidor web.
+Cuando uno quiere parte del trabajo ya hecho, o al menos preparado
+para hacer con la pulsación de un botón, a la vez que tiene
+flexibilidad para trabajar con marcos de aplicaciones más allá de lo
+que ofrece programar *plugins* (como en el SaaS), necesita un
+[Platform as a Service o PaaS](http://en.wikipedia.org/wiki/Platform_as_a_service). Un
+PaaS proporciona una pila que incluye, generalmente, almacenamiento de
+datos, un marco concreto para trabajar (tal como Django o Ruby on
+Rails) y, adicionalmente, un servidor web. 
 
 Esto conlleva una cierta falta de flexibilidad: se pueden usar las pilas que hay y el usuario sólo puede subir su aplicación que use esa pila, no instalar elementos adicionales que necesiten permisos de superusuario. Pero, por otro lado, ofrece la comodidad de tener que concentrarse sólo en la aplicación en sí y no en la infraestructura. Es, por eso, menos *DevOps* que una solución *IaaS*, pero por otro lado también tiene una parte que es la configuración y despliegue de la aplicación en sí y los tests que se vayan a usar.
 
@@ -367,7 +374,6 @@ siguiente](https://github.com/JJ/node-app-cc/blob/master/index.js):
 	});
 
 
-
 Este [programa
 (express-count.js)](https://github.com/JJ/node-app-cc/blob/master/index.js)
 introduce otras dos órdenes REST: PUT, que, como recordamos, sirve para
@@ -477,4 +483,17 @@ Foreman. Para ejecutar localmente nuestra aplicación ejecutaremos
 `foreman start web`. `foreman` leerá el `procfile` y ejecutará la
 tarea correspondiente a `web`, en este caso `index.js`.  Podemos
 interrumpirlo simplemente tecleanco Ctrl-C.
+
+[`foreman`](http://blog.daviddollar.org/2011/05/06/introducing-foreman.html)
+actúa como un envoltorio de tu aplicación, ejecutando todo lo
+necesario para que funcione (no sólo la web, sino bases de datos o
+cualquier otra cosa que haya que levantar antes) codificando por
+colores la salida correspondiente a cada proceso y presentando también
+el registro o *log* de la misma de forma más amigable.
+
+>Usar como base la aplicación de ejemplo de heroku y combinarla con la
+>aplicación en node que se ha creado anteriormente. Probarla de forma
+>local con `foreman`. Al final de cada modificación, los tests tendrán
+>que funcionar correctamente; cuando se pasen los tests, se puede
+>volver a desplegar en heroku.
 
