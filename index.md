@@ -526,5 +526,48 @@ anteriormente.
 
 >Siempre hay más de una manera de hacer las cosas.
 
-Ahora tenemos que gestionar los dos repositorios de `git` que tenemos.
+Ahora hay que gestionar los dos repositorios de `git` que
+tenemos. `heroku create` (en cualquiera de sus formas) crea un destino
+`heroku` dentro de la configuración de `git` de forma que se pueda
+hacer `git push heroku master`; `heroku` aquí no es más que un alias a
+la dirección de tu aplicatión, que si miras en `.git/config` estará
+definido de una forma similar a la siguiente
+
+```
+[remote "heroku"]
+	url = git@heroku.com:porrio.git
+	fetch = +refs/heads/*:refs/remotes/heroku/*
+```
+Es el mismo resultado que si hubiéramos dado la orden
+
+    git remote add heroku git@heroku.com:porrio.git
+
+es decir, crear un alias para la dirección real del repositorio en
+Heroku (que puedes consultar desde tu panel de control; será algo
+diferente a lo que hay aquí e igual que el `nombre_muy_chulo` que
+hayas decidido darle. Si vas a subir a Heroku una aplicación ya
+creada, tendrás que añadir esta orden. Si te has descargado el ejemplo
+de GitHub y seguido las instrucciones anteriores, tendrás que crear un
+repositorio vacío propio en GitHub y añadirle este como `origin` de la
+forma siguiente
+
+	# Borra el origen inicial, que será el de la aplicación de ejemplo
+	git remote rm origin
+	# Crea el nuevo origin
+	git remote add origin  git@github.com:mi-nick/mi-app.git
+
+Todo esto puedes ahorrártelo si desde el principio haces un *fork* de
+la aplicación de node y trabajas con ese fork; el origen estará ya
+definido.
+
+Ahora tienes dos repositorios: el que está efectivamente desplegado y
+el que contiene los fuentes. ¿No sería una buena idea que se trabajara
+con uno sólo? Efectivamente, [GitHub permite desplegar directamente a
+Heroku cuando se hace un `push` a la rama `master`](http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository),
+aunque no es inmediato, sino que pasa por usar un servicio de
+integración continua, que se asegure de que todo funciona
+correctamente. 
+
+
+
 
