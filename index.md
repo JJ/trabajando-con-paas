@@ -568,6 +568,32 @@ aunque no es inmediato, sino que pasa por usar un servicio de
 integración continua, que se asegure de que todo funciona
 correctamente. 
 
+Para eso, evidentemente, el sitio en el que se despliegue debe estar
+preparado. No es el caso de Heroku (que tiene, sin embargo,
+[una beta reciente en GitHub y posiblemente funcione en el futuro próximo](https://github.com/github/github-services/tree/master/docs), que necesita un servicio
+intermedio para llevarlo a cabo, pero
+[usando AWS CodeDeploy se puede desplegar a una instancia en la nube de Amazon](https://medium.com/aws-activate-startup-blog/simplify-code-deployments-with-aws-codedeploy-e95599091304). Sin
+embargo,
+[no es complicado configurar un servicio de integración continua como Snap CI](http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository). Después
+de [darte de alta en el Snap CI](https://snap-ci.com/), la
+configuración se hace desde un panel de control y, si ya lo tienes
+configurado para Travis (como deberías) el propio sitio detecta la
+configuración automáticamente.
 
+Para añadir el paso de despliegue a Heroku hay que hacer un paso
+adicional: en el menú de Configuración se puede añadir un paso
+adicional tras el de Test, en el que no hay que más que decirle el
+repositorio de Heroku al que se va a desplegar.
+
+![Panel de control de Snap CI con despliegue a Heroku](img/despliegue-snap-ci.png)
+
+Con esto, un simple push a una rama determinada, que sería la
+`master`, se hará que se pruebe y, en caso de pasar los tests, se
+despliegue automáticamente en Heroku.
+
+> Haz alguna modificación a tu aplicación en node.js para Heroku, sin
+> olvidar añadir los tests para la nueva funcionalidad, y configura el
+> despliegue automático a Heroku usando Snap CI o
+> [alguno de los otros servicios, como Codeship, mencionados en StackOverflow]((http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository) 
 
 
