@@ -396,6 +396,19 @@ vez creado, podemos acceder a él desde la línea de órdenes o desde el
 navegador; la dirección `http://127.0.0.1:8080/porras` nos devolverá
 en formato JSON todo lo que hayamos almacenado hasta el momento.
 
+Todas las órdenes definen una *ruta*, que es como se denominan cada
+una de las funciones del API REST. Las
+[rutas](https://www.packtpub.com/books/content/understanding-express-routes)
+pueden ser simples cadenas (como `/porras` en el caso de `get`) o
+incluir parámetros, como en el caso de `put`:
+`/porra/:local/:visitante/:competition/:year` incluye una orden al
+principio y cuatro parámetros. Estos parámetros se recuperan dentro de
+la función *callback* como atributos de la variable `req.params`,
+tales como `req.params.local` en las siguientes líneas.
+
+> Realizar u na app en express que incluya variables como en el caso
+> anterior. 
+
 ## Probando nuestra aplicación en la nube
 
 Porque esté en la nube no significa que no tengamos que testearla como cualquier hija de vecina. En este caso no vamos a usar tests unitarios, sino test funcionales (o como se llamen); de lo que se trata es que tenemos que levantar la web y que vaya todo medianamente bien.
@@ -590,6 +603,6 @@ despliegue automáticamente en Heroku.
 > Haz alguna modificación a tu aplicación en node.js para Heroku, sin
 > olvidar añadir los tests para la nueva funcionalidad, y configura el
 > despliegue automático a Heroku usando Snap CI o
-> [alguno de los otros servicios, como Codeship, mencionados en StackOverflow]((http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository) 
+> [alguno de los otros servicios, como Codeship, mencionados en StackOverflow](http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository) 
 
 
