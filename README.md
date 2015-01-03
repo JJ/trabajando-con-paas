@@ -47,7 +47,14 @@ Algunos servicios PaaS son específicos (sólo alojan una solución
 determinada, como [CloudAnt](https://cloudant.com/) que aloja una base
 de datos con CouchDB o genéricos), permitiendo una serie de soluciones
 en general relativamente limitada; [Heroku](http://www.heroku.com) y
-[OpenShift](http://www.openshift.com) están entre estos últimos. 
+[OpenShift](http://www.openshift.com) están entre estos últimos, pero
+también [hay otros](http://ocdevel.com/blog/nodejs-paas-comparison)
+como [AppFog](https://www.appfog.com/product/) y otros muchos, depende
+del tipo de pila que quieras alojar; los tres anteriores son los que
+trabajan bien con
+node.js, [igual que nitrous.io](http://blog.blakepatches.me/blog/2013/11/04/comparison-of-node-dot-js-hosting/). [dotCloud (que ya no se puede usar de forma gratuita)](https://docs.dotcloud.com/services/perl/)
+trabaja con Perl, por ejemplo, como
+[Stackato y otras](http://showmetheco.de/articles/2011/8/three-perl-cloud-hosting-platforms.html). 
 
 > Darse de alta en algún servicio PaaS tal como Heroku, [Nodejitsu](https://www.nodejitsu.com/) u OpenShift.
 
@@ -58,7 +65,27 @@ intensivo, o bien capacidades que no entren en el paquete básico, hay
 que pasar al modelo de pago. Estas máquinas virtuales se denominan
 [*dynos*](https://devcenter.heroku.com/articles/dynos) en Heroku y
 simplemente aplicaciones en OpenShift, aunque los *dynos* son mucho
-más flexibles que las aplicaciones de OpenShift.
+más flexibles que las aplicaciones de OpenShift. Generalmente, los
+PaaS proporcionan un *toolbelt* o herramientas de línea de órdenes que
+permiten controlarlos directamente desde nuestra aplicación; estos
+conjuntos de herramientas acceden a un API que también podemos
+manipular en caso necesario. Tanto desde estas herramientas como desde
+el panel de control, los PaaS permiten *escalar* fácilmente una
+aplicación, añadiéndole nuevos *nodos* sin necesidad de modificar la
+aplicación. El propio *middleware* del PaaS se encarga de equilibrar
+la carga
+
+> Aunque
+> [no necesariamente lo hace de la mejor forma](http://genius.com/James-somers-herokus-ugly-secret-annotated). Heroku
+> cambió el enrutado de forma que ya no funciona tan bien como lo
+> hacía 5 años atrás.
+
+entre los diferentes nodos que uno tenga. La ventaja es que te ofrece
+un PaaS es que, aunque evidentemente haya que pagar por lo que se
+consume, sólo hay que hacerlo mientras se necesita; una vez pasado el
+pico, se puede escalar *hacia abajo* eliminando los nodos que uno no
+necesite; por supuesto, el propio PaaS suele proveer de herramientas
+que hagan esto de forma más o menos automática. 
 
 La interacción con los PaaS se hace en general a través de una
 herramienta de línea de órdenes que permite, para empezar, crear
@@ -76,7 +103,7 @@ usan las bases de datos NoSQL como MongoDB, Redis o CouchDB.
 
 En cualquier caso, los PaaS suelen tener un panel de control que
 permite hacer ciertas cosas como configurar *plugins* o *add-ons*
-desde la web fácilmente. Estos suelen seguir el mismo modelo freemium:
+desde la web fácilmente. Estos suelen seguir el mismo modelo *freemium*:
 diferentes tamaños o instancias son gratuitas o tienen un coste; en
 algunos casos cualquier instancia tiene un coste, y en algunas
 plataformas, como Heroku, hay que introducir datos de facturación
@@ -96,7 +123,10 @@ limitaciones. Por ejemplo, no dejan conectar por `ssh` o no tienen un
 sistema de ficheros permamente, de forma que hay que usar de forma
 forzosa un almacenamiento de datos que sea un *add-on* o bien otro
 externo que se ofrezca de forma independiente (pero siguiendo el mismo
-modelo). 
+modelo). También hay que tener en cuenta que las prestaciones que
+vamos a poder obtener de los *tier* gratuitos no van a ser como para
+poder montar una *startup* y forrarnos: son muy limitadas, tanto en
+latencia como en CPU como en memoria. 
 
 En general, el enfoque para este tipo de herramientas (y para casi
 todo el desarrollo web moderno) es trabajar con servidores REST que
