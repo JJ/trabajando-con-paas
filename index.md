@@ -11,10 +11,16 @@ Trabajando con PaaS: Plataformas como servicio
 2. Conocer las diferentes plataformas *freemium* PaaS existentes.
 3. Entender el concepto de PaaS y como se relaciona con los otros niveles de la nube.
 4. Comenzar a usar un PaaS.
+5. Aprender a desplegar automáticamente.
+
 
 ## Introducción
 
-Cuando uno quiere parte del trabajo ya hecho, o al menos preparado
+> Si no lo has consultado todavía, puedes
+[echarle un vistazo al tutorial de desarrollo basado en pruebas](http://jj.github.io/desarrollo-basado-pruebas)
+>que precedía a este dentro del curso.
+
+Cuando uno quiere parte del trabajo de instalación ya hecho, o al menos preparado
 para hacer con la pulsación de un botón, a la vez que tiene
 flexibilidad para trabajar con marcos de aplicaciones más allá de lo
 que ofrece programar *plugins* (como en el SaaS), necesita un
@@ -76,7 +82,25 @@ En cualquier caso, los PaaS suelen tener un panel de control que
 permite hacer ciertas cosas como configurar *plugins* o *add-ons*
 desde la web fácilmente. Estos suelen seguir el mismo modelo freemium:
 diferentes tamaños o instancias son gratuitas o tienen un coste; en
-algunos casos cualquier instancia tiene un coste.
+algunos casos cualquier instancia tiene un coste, y en algunas
+plataformas, como Heroku, hay que introducir datos de facturación
+(para cuando se excedan los límites gratuitos) en casi todos los
+*add-ons*, lo que deja una cantidad limitada para uso de pruebas o
+enseñanza.
+
+>En todo caso, no está mal tener disponible una tarjeta de crédito,
+>posiblemente virtual o de prepago, para trabajar con todo tipo de
+>infraestructuras de nube en pruebas; puedes acceder a muchos más
+>servicios y posibilidades y, aunque se excedan los límites gratuitos,
+>el coste no suele ser grande. 
+
+Los PaaS no dejan acceso completo a la máquina virtual que ejecuta
+nuestra aplicación y, en muchos casos, tienen también otras
+limitaciones. Por ejemplo, no dejan conectar por `ssh` o no tienen un
+sistema de ficheros permamente, de forma que hay que usar de forma
+forzosa un almacenamiento de datos que sea un *add-on* o bien otro
+externo que se ofrezca de forma independiente (pero siguiendo el mismo
+modelo). 
 
 En general, el enfoque para este tipo de herramientas (y para casi
 todo el desarrollo web moderno) es trabajar con servidores REST que
@@ -146,7 +170,8 @@ web, por el simple hecho de que es muy fácil construir el interfaz:
 simplemente creando una cadena determinada. Eso los hace también más
 rápidos, aunque sean menos flexibles.
 
-Vamos a ver un interfaz de este tipo relativamente reciente: el de
+Vamos a ver un interfaz de este tipo relativamente
+reciente. Inicialmente nuestra idea era usar el de
 [Twitter](http://twitter.com/), un sitio *social* que transmite a todo
 el que quiera escucharlo las líneas de estado (mensajes de menos de 200
 caracteres). El [API de Twitter](https://dev.twitter.com/docs) es
@@ -230,7 +255,24 @@ transferir la representación de un recurso del cliente al servidor,
 `POST` cambiará el estado de un recurso, `PUT` (que no se suele usar tan
 a menudo) directamente cambiaría la representación del recurso, mientras
 que `DELETE` borraría el recurso; a estas arquitecturas se les suele
-denominar también *arquitecturas orientadas al recurso*
+denominar también *arquitecturas orientadas al recurso*.
+
+>Hay
+>[muchos más verbos HTTP](https://www.packtpub.com/books/content/understanding-express-routes);
+>también se pueden crear interfaces REST usando verbos uPnP. Sin
+>embargo, con esos cuatro más posiblemente `HEAD`, que devuelve los
+>metadatos de un recursos, es, en general, suficiente para crear una
+>aplicación. 
+
+Cualquier cliente offline como `wget` o el anteriormente mencionado
+`curl` pueden servir para hacer pruebas sobre un cliente REST como el
+anterior. También se pueden instalar extensiones para Chrome como
+[Postman](http://www.getpostman.com/) que tiene un interfaz más
+amigable y además te permite crear peticiones complejas, con
+autenticación y demás.
+
+> Buscar un interfaz API abierto y crear diferentes peticiones con
+> Postman. 
 
 Por eso también se suelen proponer una serie de [buenas prácticas para
 diseñar un interfaz
@@ -250,9 +292,9 @@ sólo se pueden proponer resultados por parte de un usuario. Se podría
 diseñar el interfaz de la forma siguiente:
 
 -   Quiniela de una jornada:
-    `http://jost.com/quiniela/jornada/[número de       jornada]`
+    `http://jost.com/quiniela/jornada/[número de jornada]`
 -   Un partido de una quiniela:
-    `http://jost.com/quiniela/jornada/[número de       jornada]/partido/[número de partido]`
+    `http://jost.com/quiniela/jornada/[número de jornada]/partido/[número de partido]`
 -   Para los resultados, habría que sustituir `quiniela` por
     `resultados`. Adicionalmente, añadir `usuario/[nombre de usuario]`,
     para recuperar los resultados propuestos por un usuario determinado.
@@ -273,7 +315,7 @@ esté incluido en el marco de desarrollo e incluya una forma fácil de
 crear estas *rutas*, que equivalen a llamadas al API en REST.
 
 
-## Interfaces REST simples con express
+## Creando una aplicación para su despliegue en un PaaS
 
 Para diseñar interfaces REST de forma bastante simple, hay un [módulo de
 node.js llamado express](http://expressjs.com/). La idea de este módulo
