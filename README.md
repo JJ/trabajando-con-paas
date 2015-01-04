@@ -52,7 +52,11 @@ también [hay otros](http://ocdevel.com/blog/nodejs-paas-comparison)
 como [AppFog](https://www.appfog.com/product/) y otros muchos, depende
 del tipo de pila que quieras alojar; los tres anteriores son los que
 trabajan bien con
-node.js, [igual que nitrous.io](http://blog.blakepatches.me/blog/2013/11/04/comparison-of-node-dot-js-hosting/). [dotCloud (que ya no se puede usar de forma gratuita)](https://docs.dotcloud.com/services/perl/)
+node.js, [igual que nitrous.io](http://blog.blakepatches.me/blog/2013/11/04/comparison-of-node-dot-js-hosting/).
+
+>Después de probar casi todos los servicios anteriores, me da la impresión de que poco hay más allá de Heroku y Openshift. AppFog y Nodejitsu, después de la efervescencia inicial, dan 30 días de prueba solamente. Me falta por probar nitrous.io, pero del resto, al menos los que funcionan con node.js, poco más hay. 
+
+[dotCloud (que ya no se puede usar de forma gratuita)](https://docs.dotcloud.com/services/perl/)
 trabaja con Perl, por ejemplo, como
 [Stackato y otras](http://showmetheco.de/articles/2011/8/three-perl-cloud-hosting-platforms.html). 
 
