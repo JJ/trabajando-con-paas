@@ -13,7 +13,7 @@ Trabajando con PaaS: Plataformas como servicio
 ## Introducción
 
 > Si no lo has consultado todavía, puedes
-[echarle un vistazo al tutorial de desarrollo basado en pruebas](http://jj.github.io/desarrollo-basado-pruebas)
+[echarle un vistazo al tutorial de desarrollo basado en pruebas](http://jj.github.io/desarrollo-basado-pruebas/)
 >que precedía a este dentro del curso.
 
 Cuando uno quiere parte del trabajo de instalación ya hecho, o al menos preparado
@@ -46,8 +46,8 @@ aplicaciones REST.
 Algunos servicios PaaS son específicos (sólo alojan una solución
 determinada, como [CloudAnt](https://cloudant.com/) que aloja una base
 de datos con CouchDB o genéricos), permitiendo una serie de soluciones
-en general relativamente limitada; [Heroku](http://www.heroku.com) y
-[OpenShift](http://www.openshift.com) están entre estos últimos, pero
+en general relativamente limitada; [Heroku](https://www.heroku.com) y
+[OpenShift](https://www.openshift.com) están entre estos últimos, pero
 también [hay otros](http://ocdevel.com/blog/nodejs-paas-comparison)
 como [AppFog](https://www.appfog.com/product/) y otros muchos, depende
 del tipo de pila que quieras alojar; los tres anteriores son los que
@@ -152,7 +152,7 @@ posibilidades, `PUT` (que envía un recurso determinado al servidor),
 `DELETE` (que borra un recurso del servidor) e incluso `HEAD` (igual que
 `GET`, pero sin el cuerpo de la respuesta).
 
-El protocolo [HTTP](#HTTP) gira alrededor del concepto de *recurso*: un
+El protocolo HTTP gira alrededor del concepto de *recurso*: un
 recurso en un servidor está identificado por un URI, y es la mínima
 acción que un servidor puede realizar. Como características adicionales,
 la acción de algunas peticiones (`GET` y `HEAD`) debe ser *segura*, es
@@ -161,7 +161,7 @@ Otras acciones, como `PUT` y `DELETE`, se denominan *idempotentes*: el
 hacer varias veces la misma petición tiene el mismo efecto que el
 hacerla una sola vez.
 
-[HTTP](#HTTP) funciona puramente como cliente-servidor: se hace una
+HTTP funciona puramente como cliente-servidor: se hace una
 petición, y se espera la respuesta. Lo que no quiere decir que no se
 puedan hacer peticiones concurrentes y asíncronas; sin embargo, esas
 peticiones tendrán que estar dentro del marco de una página web (o sea,
@@ -195,17 +195,17 @@ usa texto directamente, aunque también se puede usar JSON o cualquier
 otro tipo de capa.
 
 De hecho, las aplicaciones [REST suelen ser más
-populares](http://www.oreillynet.com/pub/wlg/3005) que otros servicios
+populares](http://archive.oreilly.com/pub/wlg/3005) que otros servicios
 web, por el simple hecho de que es muy fácil construir el interfaz:
 simplemente creando una cadena determinada. Eso los hace también más
 rápidos, aunque sean menos flexibles.
 
 Vamos a ver un interfaz de este tipo relativamente
 reciente. Inicialmente nuestra idea era usar el de
-[Twitter](http://twitter.com/), un sitio *social* que transmite a todo
+[Twitter](https://twitter.com/), un sitio *social* que transmite a todo
 el que quiera escucharlo las líneas de estado (mensajes de menos de 200
-caracteres). El [API de Twitter](https://dev.twitter.com/docs) es
-[RESTful](#RESTful), y está bastante bien diseñada. Para usarla es
+caracteres). El [API de Twitter](https://dev.twitter.com/overview/documentation) es
+RESTful, y está bastante bien diseñada. Para usarla es
 necesario darse de alta; desde la versión 1.1 del interfaz todas las
 peticiones necesitan autenticación. Así que usaremos [otro interfaz, el
 de GitHub](http://developer.github.com/v3/), para hacer pruebas. Por
@@ -217,7 +217,7 @@ pertenece el usuario [JJ](http://github.com/JJ):
 Para llevar a cabo este ejemplo hay que instalar `curl`, un programa que
 en una primera aproximación es simplemente un descargador de páginas web
 pero que en segunda se puede usar como un completo cliente
-[REST](#REST); en este caso `-i` te incluye las cabeceras en la salida,
+REST; en este caso `-i` te incluye las cabeceras en la salida,
 con lo que producirá algo de este estilo
 
 	HTTP/1.1 200 OK
@@ -278,7 +278,7 @@ con lo que producirá algo de este estilo
 	  }
 	]
 
-La idea de [REST](#REST) desde el punto de vista del servidor es usar el
+La idea de REST desde el punto de vista del servidor es usar el
 URL para representar recursos, y las propias órdenes de HTTP para
 ejercitar acciones sobre ese recursos. En general, `GET` servirá para
 transferir la representación de un recurso del cliente al servidor,
@@ -353,7 +353,7 @@ es reflejar en el código, de la forma más natural posible, el diseño del
 interfaz REST.
 
 Pero primero hay que instalarlo. Node.js tiene un sistema de gestión de
-módulos bastante simple llamado [npm](http://npmjs.org/) que ya hemos usado. Tras seguir las instrucciones en el 
+módulos bastante simple llamado [npm](https://npmjs.org/) que ya hemos usado. Tras seguir las instrucciones en el 
 sitio para instalarlo (o, en el caso de Ubuntu, instalarlo desde
 Synaptic o con apt-get), vamos al directorio en el que vayamos a crear
 el programa y escribimos
@@ -394,7 +394,7 @@ otro lado se pone directamente la función para cada una de ellas. Dentro
 de cada función de respuesta podemos procesar las órdenes que queramos.
 
 Por otro lado, se usa `send`  para enviar el resultado,
-[una orden más flexible](http://expressjs.com/guide.html#http-methods)
+[una orden más flexible](http://expressjs.com/api.html#res.send)
 que admite todo
 tipo de datos que son procesados para enviar al cliente la respuesta
 correcta. Tampoco hace falta establecer explícitamente el tipo MIME que
