@@ -567,9 +567,8 @@ efectivamente, el que se ejecute. Pero ¿cómo sabe Heroku qué es lo que
 hay que ejecutar? Si miramos el fichero `Procfile` encontraremos algo
 así
 
-```
-web: node index.js
-```
+	web: node index.js
+
 
 Este [Procfile](https://devcenter.heroku.com/articles/procfile) se usa
 para indicar a heroku qué es lo que tiene que ejecutar. En casi todos
@@ -599,12 +598,12 @@ el registro o *log* de la misma de forma más amigable.
 
 Si está `package.json` bien configurado, por ejemplo, de esta forma
 
-```javascript
-  "scripts": {
-    "test": "mocha",
-    "start": "node index.js"
-  },
-```
+
+    "scripts": {
+	  "test": "mocha",
+	  "start": "node index.js"
+	},
+
 
 se puede arrancar también la aplicación, sin ningún tipo de
 envoltorio, simplemente con `npm start`, que ejecutará lo que hay a su
@@ -622,11 +621,11 @@ hacer `git push heroku master`; `heroku` aquí no es más que un alias a
 la dirección de tu aplicación, que si miras en `.git/config` estará
 definido de una forma similar a la siguiente
 
-```
-[remote "heroku"]
-	url = git@heroku.com:porrio.git
-	fetch = +refs/heads/*:refs/remotes/heroku/*
-```
+
+    [remote "heroku"]
+	   url = git@heroku.com:porrio.git
+	   fetch = +refs/heads/*:refs/remotes/heroku/*
+
 Es el mismo resultado que si hubiéramos dado la orden
 
     git remote add heroku git@heroku.com:porrio.git
