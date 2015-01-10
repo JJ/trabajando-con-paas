@@ -124,7 +124,7 @@ enseñanza.
 Los PaaS no dejan acceso completo a la máquina virtual que ejecuta
 nuestra aplicación y, en muchos casos, tienen también otras
 limitaciones. Por ejemplo, no dejan conectar por `ssh` o no tienen un
-sistema de ficheros permamente, de forma que hay que usar de forma
+sistema de ficheros permanente, de forma que hay que usar de forma
 forzosa un almacenamiento de datos que sea un *add-on* o bien otro
 externo que se ofrezca de forma independiente (pero siguiendo el mismo
 modelo). También hay que tener en cuenta que las prestaciones que
@@ -354,7 +354,7 @@ interfaz REST.
 
 Pero primero hay que instalarlo. Node.js tiene un sistema de gestión de
 módulos bastante simple llamado [npm](http://npmjs.org/) que ya hemos usado. Tras seguir las instrucciones en el 
-sitio para instalarlo (o, en el caso de ubuntu, instalarlo desde
+sitio para instalarlo (o, en el caso de Ubuntu, instalarlo desde
 Synaptic o con apt-get), vamos al directorio en el que vayamos a crear
 el programa y escribimos
 
@@ -362,7 +362,7 @@ el programa y escribimos
 
 en general, no hace falta tener permiso de administrador, sólo el
 necesario para crear, leer y ejecutar ficheros en el directorio en el
-que se esté trabajando. `--save` guarda la dependencencia en `package.json` siempre que esté en el mismo directorio, que convendría que estuviera, así no tenemos que recordar qué es lo que está instalado. 
+que se esté trabajando. `--save` guarda la dependencia en `package.json` siempre que esté en el mismo directorio, que convendría que estuviera, así no tenemos que recordar qué es lo que está instalado. 
 
 Tras la instalación, el programa que hemos visto más arriba se
 transforma en el siguiente:
@@ -404,10 +404,10 @@ En los dos casos, las peticiones devuelven JSON. Una aplicación de
 este tipo puede devolver cualquier cosa, HTML o texto, pero conviene
 acostumbrarse a pensar en estas aplicaciones como servidores a los
 cuales se va a acceder desde un cliente, sea un programa que use un
-cliente REST o sea desde el navegador usando jQuery o Javascript. 
+cliente REST o sea desde el navegador usando jQuery o JavaScript. 
 
 >Realizar una aplicación básica que use `express` para devolver alguna
->estructura de datos del model que se viene usando en el curso.
+>estructura de datos del modelo que se viene usando en el curso.
 
 Con el mismo `express` se pueden generar aplicaciones no tan básicas
 ejecutándolo de la forma siguiente:
@@ -522,7 +522,7 @@ Estas pruebas permiten que no nos encontremos con sorpresas una vez que despegue
 
 Podemos, por ejemplo, desplegarlo en Heroku.
 
-> Sitios como Openshift or Nodester tienen sistemas también similares,
+> Sitios como Openshift o Nodester tienen sistemas también similares,
 > pero por lo pronto vamos a usar este, que tiene un sistema un poco
 > más abierto y completo.
 
@@ -572,13 +572,13 @@ para indicar a heroku qué es lo que tiene que ejecutar. En casi todos
 los casos se tratará de una aplicación web, y por tanto la parte
 izquierda, `web:` será común. Dependiendo del lenguaje, variará la
 parte derecha; en este caso le estamos indicando la línea de órdenes
-que hay que ejecutar para *levaltar* la web que hemos creado.
+que hay que ejecutar para *levantar* la web que hemos creado.
 
 Localmente, se recrea (aproximadamente) el entorno de heroku usando
 Foreman. Para ejecutar localmente nuestra aplicación ejecutaremos
-`foreman start web`. `foreman` leerá el `procfile` y ejecutará la
+`foreman start web`. `foreman` leerá el `Procfile` y ejecutará la
 tarea correspondiente a `web`, en este caso `index.js`.  Podemos
-interrumpirlo simplemente tecleanco Ctrl-C.
+interrumpirlo simplemente tecleando Ctrl-C.
 
 [`foreman`](http://blog.daviddollar.org/2011/05/06/introducing-foreman.html)
 actúa como un envoltorio de tu aplicación, ejecutando todo lo
@@ -615,7 +615,7 @@ Ahora hay que gestionar los dos repositorios de `git` que
 tenemos. `heroku create` (en cualquiera de sus formas) crea un destino
 `heroku` dentro de la configuración de `git` de forma que se pueda
 hacer `git push heroku master`; `heroku` aquí no es más que un alias a
-la dirección de tu aplicatión, que si miras en `.git/config` estará
+la dirección de tu aplicación, que si miras en `.git/config` estará
 definido de una forma similar a la siguiente
 
 ```
