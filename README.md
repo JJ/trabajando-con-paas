@@ -553,11 +553,24 @@ Puedes darle también un nombre a la aplicación y asignarle un servidor
    --region eu nombre_muy_chulo` Si te asignan un nombre puedes
    cambiarlo también más adelante, en la web y en el repo.
 
-Esto crea una aplicación en la web de Heroku, que al hacer `git push heroku master` se pondrá en marcha. 
+Esto crea una aplicación en la web de Heroku, que al hacer `git push
+heroku master` se pondrá en marcha. La mayoría de los PaaS usa `git
+push` como modo de despliegue, que permite tener controlada la versión
+de todos los ficheros que hay en el mismo y además, con los *ganchos*
+post-`push`, [compilar y ejecutar la aplicación a través de los llamados
+*Buildpacks*](http://www.jamesward.com/2012/07/18/the-magic-behind-herokus-git-push-deployment).  
 
 > Instalar y echar a andar tu primera aplicación en heroku.
 
-Sólo hemos, por lo pronto, desplegado la aplicación por defecto. Se
+Sólo hemos, por lo pronto, desplegado la aplicación por defecto.
+
+>Usando también el *buildpack* que esté programado para tu pila, el de
+>Node o el que sea. Pero si eres un poco atrevido, puedes
+>[crear tu propio Buildpack](https://devcenter.heroku.com/articles/buildpack-api),
+>que puede estar escrito en cualquier lenguaje y consiste en realidad
+>en tres scripts. 
+
+Se
 habrá generado un fichero denominado `index.js` que será,
 efectivamente, el que se ejecute. Pero ¿cómo sabe Heroku qué es lo que
 hay que ejecutar? Si miramos el fichero `Procfile` encontraremos algo
@@ -573,7 +586,7 @@ izquierda, `web:` será común. Dependiendo del lenguaje, variará la
 parte derecha; en este caso le estamos indicando la línea de órdenes
 que hay que ejecutar para *levantar* la web que hemos creado.
 
-Localmente, se recrea (aproximadamente) el entorno de heroku usando
+Localmente, se recrea (aproximadamente) el entorno de Heroku usando
 Foreman. Para ejecutar localmente nuestra aplicación ejecutaremos
 `foreman start web`. `foreman` leerá el `Procfile` y ejecutará la
 tarea correspondiente a `web`, en este caso `index.js`.  Podemos
@@ -653,10 +666,15 @@ integración continua, que se asegure de que todo funciona
 correctamente. 
 
 Para eso, evidentemente, el sitio en el que se despliegue debe estar
-preparado. No es el caso de Heroku (que tiene, sin embargo,
-[una beta reciente en GitHub y posiblemente funcione en el futuro próximo](https://github.com/github/github-services/tree/master/docs), que necesita un servicio
-intermedio para llevarlo a cabo, pero
-[usando AWS CodeDeploy se puede desplegar a una instancia en la nube de Amazon](https://medium.com/aws-activate-startup-blog/simplify-code-deployments-with-aws-codedeploy-e95599091304). Sin
+preparado. No es el caso de Heroku
+
+>Heroku tiene, sin embargo,
+>[una beta reciente en GitHub y posiblemente funcione en el futuro próximo](https://github.com/github/github-services/tree/master/docs), que necesita un servicio
+>intermedio para llevarlo a cabo, aunque
+>[se puede probar ahora mismo en beta](https://devcenter.heroku.com/articles/github-integration)
+
+Otros sistemas, como
+[ AWS CodeDeploy de Amazon pueden desplegar a una instancia en la nube de esta empresa](https://medium.com/aws-activate-startup-blog/simplify-code-deployments-with-aws-codedeploy-e95599091304). Sin
 embargo,
 [no es complicado configurar un servicio de integración continua como Snap CI](http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository). Después
 de [darte de alta en el Snap CI](https://snap-ci.com/), la
