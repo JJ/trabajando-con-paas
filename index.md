@@ -520,7 +520,7 @@ Podemos hacer más pruebas, usando get, por ejemplo. Pero se deja como ejercicio
 
 Estas pruebas permiten que no nos encontremos con sorpresas una vez que despeguemos en el PaaS. Así sabemos que, al menos, todas las rutas que hemos creado funcionan correctamente. 
 
-> Crear pruebas de las rutas de la aplicación. 
+> Crear pruebas para las diferentes rutas de la aplicación. 
 
 ## Desplegando en el PaaS
 
@@ -683,5 +683,33 @@ despliegue automáticamente en Heroku.
 > olvidar añadir los tests para la nueva funcionalidad, y configura el
 > despliegue automático a Heroku usando Snap CI o
 > [alguno de los otros servicios, como Codeship, mencionados en StackOverflow](http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository) 
+
+En principio se ha preparado [a la aplicación](https://github.com/JJ/node-app-cc/blob/master/index.js) para su despliegue en un solo PaaS, Heroku. Pero, ¿se podría desplegar en otro PaaS también?
+
+Hay que dar un paso atrás y ver qué es necesario para desplegar en Heroku, aparte de lo obvio, tener una cuenta. Hacen falta varias cosas:
+
+1. Un `packaje.json`, aunque en realidad esto no es específico de Heroku sino de cualquier aplicación y cualquier despliegue.
+2. El fichero `Procfile` con el trabaja Foreman y que distribuye las tareas entre los diferentes *dynos*: `web`, `worker` y los demás.
+3. Requisitos específicos de IP y puerto al que escuchar y que se pasan a `app.listen`. Estos parámetros se definen como variables de entorno.
+
+Teniendo en cuenta esto, no es difícil cambiar la aplicación para que pueda funcionar correctamente al menos en esos dos PaaS, que son los más populares. En Openshift, en realidad, no hace falta `Procfile`. Como no tiene el concepto de diferentes tipos de dynos, usa directamente `package.json` para iniciar la aplicación. Por otro lado, los requisitos específicos de puerto e IP se tienen en cuenta en estas dos órdenes:
+
+	var server_ip_address = process.env.OPENSHIFT_NODEJS_IP
+	                          || '0.0.0.0';
+	app.set('port', (process.env.PORT
+	                 || process.env.OPENSHIFT_NODEJS_PORT
+					 || 5000));
+
+En la primera se establece la IP en la que tiene que escuchar la aplicación. En el caso por omisión, el segundo, la dirección `0.0.0.0` indica que Express escuchará en todas las IPs. Sin embargo, eso no es correcto ni posible en OpenShift, que tiene una IP específica, contenida en la variable de entorno `OPENSHIFT_NODEJS_IP` y que será una IP de tipo local (aunque realmente esto no tiene que importarnos salvo por el caso de que no podremos acceder a esa IP directamente).
+
+En cuanto al puerto, en los dos casos hay variables de entorno para definirlo. Simplemente las vamos comprobando con || (OR) y si no está establecida ninguna, se asigna el valor por defecto, que también sirve para la ejecución local.
+
+> Darse de alta en OpenShift y preparar la aplicación con la que se ha
+> venido trabajando hasta este momento para ejecutarse en ese entorno.  
+
+También en OpenShift se puede desplegar automáticamente usando Travis,
+por ejemplo. De hecho, incluso en Heroku se puede trabajar también con
+Travis para el despliegue automático, aunque es mucho más simple
+hacerlo con Snap CI como se ha indicado más arriba.
 
 
