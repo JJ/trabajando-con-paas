@@ -12,8 +12,8 @@ Trabajando con PaaS: Plataformas como servicio
 ## Introducción
 
 > Si no lo has consultado todavía, puedes
-[echarle un vistazo al tutorial de desarrollo basado en pruebas](http://jj.github.io/desarrollo-basado-pruebas)
->que precedía a éste dentro del curso.
+[echarle un vistazo al tutorial de desarrollo basado en pruebas](http://jj.github.io/desarrollo-basado-pruebas/)
+>que precedía a este dentro del curso.
 
 Cuando uno quiere parte del trabajo de instalación ya hecho, o al menos preparado
 para hacer con la pulsación de un botón, a la vez que tiene
@@ -45,8 +45,8 @@ aplicaciones REST.
 Algunos servicios PaaS son específicos (sólo alojan una solución
 determinada, como [CloudAnt](https://cloudant.com/) que aloja una base
 de datos con CouchDB o genéricos), permitiendo una serie de soluciones
-en general relativamente limitada; [Heroku](http://www.heroku.com) y
-[OpenShift](http://www.openshift.com) están entre estos últimos, pero
+en general relativamente limitada; [Heroku](https://www.heroku.com) y
+[OpenShift](https://www.openshift.com) están entre estos últimos, pero
 también [hay otros](http://ocdevel.com/blog/nodejs-paas-comparison)
 como [AppFog](https://www.appfog.com/product/) y otros muchos, depende
 del tipo de pila que quieras alojar; los tres anteriores son los que
@@ -123,7 +123,7 @@ enseñanza.
 Los PaaS no dejan acceso completo a la máquina virtual que ejecuta
 nuestra aplicación y, en muchos casos, tienen también otras
 limitaciones. Por ejemplo, no dejan conectar por `ssh` o no tienen un
-sistema de ficheros permamente, de forma que hay que usar de forma
+sistema de ficheros permanente, de forma que hay que usar de forma
 forzosa un almacenamiento de datos que sea un *add-on* o bien otro
 externo que se ofrezca de forma independiente (pero siguiendo el mismo
 modelo). También hay que tener en cuenta que las prestaciones que
@@ -151,7 +151,7 @@ posibilidades, `PUT` (que envía un recurso determinado al servidor),
 `DELETE` (que borra un recurso del servidor) e incluso `HEAD` (igual que
 `GET`, pero sin el cuerpo de la respuesta).
 
-El protocolo [HTTP](#HTTP) gira alrededor del concepto de *recurso*: un
+El protocolo HTTP gira alrededor del concepto de *recurso*: un
 recurso en un servidor está identificado por un URI, y es la mínima
 acción que un servidor puede realizar. Como características adicionales,
 la acción de algunas peticiones (`GET` y `HEAD`) debe ser *segura*, es
@@ -160,7 +160,7 @@ Otras acciones, como `PUT` y `DELETE`, se denominan *idempotentes*: el
 hacer varias veces la misma petición tiene el mismo efecto que el
 hacerla una sola vez.
 
-[HTTP](#HTTP) funciona puramente como cliente-servidor: se hace una
+HTTP funciona puramente como cliente-servidor: se hace una
 petición, y se espera la respuesta. Lo que no quiere decir que no se
 puedan hacer peticiones concurrentes y asíncronas; sin embargo, esas
 peticiones tendrán que estar dentro del marco de una página web (o sea,
@@ -194,17 +194,17 @@ usa texto directamente, aunque también se puede usar JSON o cualquier
 otro tipo de capa.
 
 De hecho, las aplicaciones [REST suelen ser más
-populares](http://www.oreillynet.com/pub/wlg/3005) que otros servicios
+populares](http://archive.oreilly.com/pub/wlg/3005) que otros servicios
 web, por el simple hecho de que es muy fácil construir el interfaz:
 simplemente creando una cadena determinada. Eso los hace también más
 rápidos, aunque sean menos flexibles.
 
 Vamos a ver un interfaz de este tipo relativamente
 reciente. Inicialmente nuestra idea era usar el de
-[Twitter](http://twitter.com/), un sitio *social* que transmite a todo
+[Twitter](https://twitter.com/), un sitio *social* que transmite a todo
 el que quiera escucharlo las líneas de estado (mensajes de menos de 200
-caracteres). El [API de Twitter](https://dev.twitter.com/docs) es
-[RESTful](#RESTful), y está bastante bien diseñada. Para usarla es
+caracteres). El [API de Twitter](https://dev.twitter.com/overview/documentation) es
+RESTful, y está bastante bien diseñada. Para usarla es
 necesario darse de alta; desde la versión 1.1 del interfaz todas las
 peticiones necesitan autenticación. Así que usaremos [otro interfaz, el
 de GitHub](http://developer.github.com/v3/), para hacer pruebas. Por
@@ -216,7 +216,7 @@ pertenece el usuario [JJ](http://github.com/JJ):
 Para llevar a cabo este ejemplo hay que instalar `curl`, un programa que
 en una primera aproximación es simplemente un descargador de páginas web
 pero que en segunda se puede usar como un completo cliente
-[REST](#REST); en este caso `-i` te incluye las cabeceras en la salida,
+REST; en este caso `-i` te incluye las cabeceras en la salida,
 con lo que producirá algo de este estilo
 
 	HTTP/1.1 200 OK
@@ -277,7 +277,7 @@ con lo que producirá algo de este estilo
 	  }
 	]
 
-La idea de [REST](#REST) desde el punto de vista del servidor es usar el
+La idea de REST desde el punto de vista del servidor es usar el
 URL para representar recursos, y las propias órdenes de HTTP para
 ejercitar acciones sobre ese recursos. En general, `GET` servirá para
 transferir la representación de un recurso del cliente al servidor,
@@ -352,8 +352,8 @@ es reflejar en el código, de la forma más natural posible, el diseño del
 interfaz REST.
 
 Pero primero hay que instalarlo. Node.js tiene un sistema de gestión de
-módulos bastante simple llamado [npm](http://npmjs.org/) que ya hemos usado. Tras seguir las instrucciones en el 
-sitio para instalarlo (o, en el caso de ubuntu, instalarlo desde
+módulos bastante simple llamado [npm](https://npmjs.org/) que ya hemos usado. Tras seguir las instrucciones en el 
+sitio para instalarlo (o, en el caso de Ubuntu, instalarlo desde
 Synaptic o con apt-get), vamos al directorio en el que vayamos a crear
 el programa y escribimos
 
@@ -361,7 +361,7 @@ el programa y escribimos
 
 en general, no hace falta tener permiso de administrador, sólo el
 necesario para crear, leer y ejecutar ficheros en el directorio en el
-que se esté trabajando. `--save` guarda la dependencencia en `package.json` siempre que esté en el mismo directorio, que convendría que estuviera, así no tenemos que recordar qué es lo que está instalado. 
+que se esté trabajando. `--save` guarda la dependencia en `package.json` siempre que esté en el mismo directorio, que convendría que estuviera, así no tenemos que recordar qué es lo que está instalado. 
 
 Tras la instalación, el programa que hemos visto más arriba se
 transforma en el siguiente:
@@ -393,7 +393,7 @@ otro lado se pone directamente la función para cada una de ellas. Dentro
 de cada función de respuesta podemos procesar las órdenes que queramos.
 
 Por otro lado, se usa `send`  para enviar el resultado,
-[una orden más flexible](http://expressjs.com/guide.html#http-methods)
+[una orden más flexible](http://expressjs.com/api.html#res.send)
 que admite todo
 tipo de datos que son procesados para enviar al cliente la respuesta
 correcta. Tampoco hace falta establecer explícitamente el tipo MIME que
@@ -403,10 +403,10 @@ En los dos casos, las peticiones devuelven JSON. Una aplicación de
 este tipo puede devolver cualquier cosa, HTML o texto, pero conviene
 acostumbrarse a pensar en estas aplicaciones como servidores a los
 cuales se va a acceder desde un cliente, sea un programa que use un
-cliente REST o sea desde el navegador usando jQuery o Javascript. 
+cliente REST o sea desde el navegador usando jQuery o JavaScript. 
 
 >Realizar una aplicación básica que use `express` para devolver alguna
->estructura de datos del model que se viene usando en el curso.
+>estructura de datos del modelo que se viene usando en el curso.
 
 Con el mismo `express` se pueden generar aplicaciones no tan básicas
 ejecutándolo de la forma siguiente:
@@ -515,13 +515,13 @@ Podemos hacer más pruebas, usando get, por ejemplo. Pero se deja como ejercicio
 
 Estas pruebas permiten que no nos encontremos con sorpresas una vez que despeguemos en el PaaS. Así sabemos que, al menos, todas las rutas que hemos creado funcionan correctamente. 
 
-> Crear pruebas de las rutas de la aplicación. 
+> Crear pruebas para las diferentes rutas de la aplicación. 
 
 ## Desplegando en el PaaS
 
 Podemos, por ejemplo, desplegarlo en Heroku.
 
-> Sitios como Openshift or Nodester tienen sistemas también similares,
+> Sitios como Openshift o Nodester tienen sistemas también similares,
 > pero por lo pronto vamos a usar este, que tiene un sistema un poco
 > más abierto y completo.
 
@@ -552,32 +552,44 @@ Puedes darle también un nombre a la aplicación y asignarle un servidor
    --region eu nombre_muy_chulo` Si te asignan un nombre puedes
    cambiarlo también más adelante, en la web y en el repo.
 
-Esto crea una aplicación en la web de Heroku, que al hacer `git push heroku master` se pondrá en marcha. 
+Esto crea una aplicación en la web de Heroku, que al hacer `git push
+heroku master` se pondrá en marcha. La mayoría de los PaaS usa `git
+push` como modo de despliegue, que permite tener controlada la versión
+de todos los ficheros que hay en el mismo y además, con los *ganchos*
+post-`push`, [compilar y ejecutar la aplicación a través de los llamados
+*Buildpacks*](http://www.jamesward.com/2012/07/18/the-magic-behind-herokus-git-push-deployment).  
 
 > Instalar y echar a andar tu primera aplicación en heroku.
 
-Sólo hemos, por lo pronto, desplegado la aplicación por defecto. Se
+Sólo hemos, por lo pronto, desplegado la aplicación por defecto.
+
+>Usando también el *buildpack* que esté programado para tu pila, el de
+>Node o el que sea. Pero si eres un poco atrevido, puedes
+>[crear tu propio Buildpack](https://devcenter.heroku.com/articles/buildpack-api),
+>que puede estar escrito en cualquier lenguaje y consiste en realidad
+>en tres scripts. 
+
+Se
 habrá generado un fichero denominado `index.js` que será,
 efectivamente, el que se ejecute. Pero ¿cómo sabe Heroku qué es lo que
 hay que ejecutar? Si miramos el fichero `Procfile` encontraremos algo
 así
 
-```
-web: node index.js
-```
+	web: node index.js
+
 
 Este [Procfile](https://devcenter.heroku.com/articles/procfile) se usa
 para indicar a heroku qué es lo que tiene que ejecutar. En casi todos
 los casos se tratará de una aplicación web, y por tanto la parte
 izquierda, `web:` será común. Dependiendo del lenguaje, variará la
 parte derecha; en este caso le estamos indicando la línea de órdenes
-que hay que ejecutar para *levaltar* la web que hemos creado.
+que hay que ejecutar para *levantar* la web que hemos creado.
 
-Localmente, se recrea (aproximadamente) el entorno de heroku usando
+Localmente, se recrea (aproximadamente) el entorno de Heroku usando
 Foreman. Para ejecutar localmente nuestra aplicación ejecutaremos
-`foreman start web`. `foreman` leerá el `procfile` y ejecutará la
+`foreman start web`. `foreman` leerá el `Procfile` y ejecutará la
 tarea correspondiente a `web`, en este caso `index.js`.  Podemos
-interrumpirlo simplemente tecleanco Ctrl-C.
+interrumpirlo simplemente tecleando Ctrl-C.
 
 [`foreman`](http://blog.daviddollar.org/2011/05/06/introducing-foreman.html)
 actúa como un envoltorio de tu aplicación, ejecutando todo lo
@@ -594,12 +606,12 @@ el registro o *log* de la misma de forma más amigable.
 
 Si está `package.json` bien configurado, por ejemplo, de esta forma
 
-```javascript
-  "scripts": {
-    "test": "mocha",
-    "start": "node index.js"
-  },
-```
+
+    "scripts": {
+	  "test": "mocha",
+	  "start": "node index.js"
+	},
+
 
 se puede arrancar también la aplicación, sin ningún tipo de
 envoltorio, simplemente con `npm start`, que ejecutará lo que hay a su
@@ -614,14 +626,14 @@ Ahora hay que gestionar los dos repositorios de `git` que
 tenemos. `heroku create` (en cualquiera de sus formas) crea un destino
 `heroku` dentro de la configuración de `git` de forma que se pueda
 hacer `git push heroku master`; `heroku` aquí no es más que un alias a
-la dirección de tu aplicatión, que si miras en `.git/config` estará
+la dirección de tu aplicación, que si miras en `.git/config` estará
 definido de una forma similar a la siguiente
 
-```
-[remote "heroku"]
-	url = git@heroku.com:porrio.git
-	fetch = +refs/heads/*:refs/remotes/heroku/*
-```
+
+    [remote "heroku"]
+	   url = git@heroku.com:porrio.git
+	   fetch = +refs/heads/*:refs/remotes/heroku/*
+
 Es el mismo resultado que si hubiéramos dado la orden
 
     git remote add heroku git@heroku.com:porrio.git
@@ -653,10 +665,15 @@ integración continua, que se asegure de que todo funciona
 correctamente. 
 
 Para eso, evidentemente, el sitio en el que se despliegue debe estar
-preparado. No es el caso de Heroku (que tiene, sin embargo,
-[una beta reciente en GitHub y posiblemente funcione en el futuro próximo](https://github.com/github/github-services/tree/master/docs), que necesita un servicio
-intermedio para llevarlo a cabo, pero
-[usando AWS CodeDeploy se puede desplegar a una instancia en la nube de Amazon](https://medium.com/aws-activate-startup-blog/simplify-code-deployments-with-aws-codedeploy-e95599091304). Sin
+preparado. No es el caso de Heroku
+
+>Heroku tiene, sin embargo,
+>[una beta reciente en GitHub y posiblemente funcione en el futuro próximo](https://github.com/github/github-services/tree/master/docs), que necesita un servicio
+>intermedio para llevarlo a cabo, aunque
+>[se puede probar ahora mismo en beta](https://devcenter.heroku.com/articles/github-integration)
+
+Otros sistemas, como
+[ AWS CodeDeploy de Amazon pueden desplegar a una instancia en la nube de esta empresa](https://medium.com/aws-activate-startup-blog/simplify-code-deployments-with-aws-codedeploy-e95599091304). Sin
 embargo,
 [no es complicado configurar un servicio de integración continua como Snap CI](http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository). Después
 de [darte de alta en el Snap CI](https://snap-ci.com/), la
@@ -679,5 +696,33 @@ despliegue automáticamente en Heroku.
 > olvidar añadir los tests para la nueva funcionalidad, y configura el
 > despliegue automático a Heroku usando Snap CI o
 > [alguno de los otros servicios, como Codeship, mencionados en StackOverflow](http://stackoverflow.com/questions/17558007/deploy-to-heroku-directly-from-my-github-repository) 
+
+En principio se ha preparado [a la aplicación](https://github.com/JJ/node-app-cc/blob/master/index.js) para su despliegue en un solo PaaS, Heroku. Pero, ¿se podría desplegar en otro PaaS también?
+
+Hay que dar un paso atrás y ver qué es necesario para desplegar en Heroku, aparte de lo obvio, tener una cuenta. Hacen falta varias cosas:
+
+1. Un `packaje.json`, aunque en realidad esto no es específico de Heroku sino de cualquier aplicación y cualquier despliegue.
+2. El fichero `Procfile` con el trabaja Foreman y que distribuye las tareas entre los diferentes *dynos*: `web`, `worker` y los demás.
+3. Requisitos específicos de IP y puerto al que escuchar y que se pasan a `app.listen`. Estos parámetros se definen como variables de entorno.
+
+Teniendo en cuenta esto, no es difícil cambiar la aplicación para que pueda funcionar correctamente al menos en esos dos PaaS, que son los más populares. En Openshift, en realidad, no hace falta `Procfile`. Como no tiene el concepto de diferentes tipos de dynos, usa directamente `package.json` para iniciar la aplicación. Por otro lado, los requisitos específicos de puerto e IP se tienen en cuenta en estas dos órdenes:
+
+	var server_ip_address = process.env.OPENSHIFT_NODEJS_IP
+	                          || '0.0.0.0';
+	app.set('port', (process.env.PORT
+	                 || process.env.OPENSHIFT_NODEJS_PORT
+					 || 5000));
+
+En la primera se establece la IP en la que tiene que escuchar la aplicación. En el caso por omisión, el segundo, la dirección `0.0.0.0` indica que Express escuchará en todas las IPs. Sin embargo, eso no es correcto ni posible en OpenShift, que tiene una IP específica, contenida en la variable de entorno `OPENSHIFT_NODEJS_IP` y que será una IP de tipo local (aunque realmente esto no tiene que importarnos salvo por el caso de que no podremos acceder a esa IP directamente).
+
+En cuanto al puerto, en los dos casos hay variables de entorno para definirlo. Simplemente las vamos comprobando con || (OR) y si no está establecida ninguna, se asigna el valor por defecto, que también sirve para la ejecución local.
+
+> Darse de alta en OpenShift y preparar la aplicación con la que se ha
+> venido trabajando hasta este momento para ejecutarse en ese entorno.  
+
+También en OpenShift se puede desplegar automáticamente usando Travis,
+por ejemplo. De hecho, incluso en Heroku se puede trabajar también con
+Travis para el despliegue automático, aunque es mucho más simple
+hacerlo con Snap CI como se ha indicado más arriba.
 
 
