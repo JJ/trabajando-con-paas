@@ -9,12 +9,11 @@ Trabajando con PaaS: Plataformas como servicio
 4. Comenzar a usar un PaaS.
 5. Aprender a desplegar automáticamente.
 
-
 ## Introducción
 
 > Si no lo has consultado todavía, puedes
 [echarle un vistazo al tutorial de desarrollo basado en pruebas](http://jj.github.io/desarrollo-basado-pruebas)
->que precedía a este dentro del curso.
+>que precedía a éste dentro del curso.
 
 Cuando uno quiere parte del trabajo de instalación ya hecho, o al menos preparado
 para hacer con la pulsación de un botón, a la vez que tiene
@@ -52,7 +51,7 @@ también [hay otros](http://ocdevel.com/blog/nodejs-paas-comparison)
 como [AppFog](https://www.appfog.com/product/) y otros muchos, depende
 del tipo de pila que quieras alojar; los tres anteriores son los que
 trabajan bien con
-node.js, [igual que nitrous.io](http://blog.blakepatches.me/blog/2013/11/04/comparison-of-node-dot-js-hosting/).
+node.js, [igual que nitrous.io](http://blog.blakepatches.me/blog/2013/11/04/comparison-of-node-dot-js-hosting/) o [IBM BlueMix](https://console.ng.bluemix.net/#/pricing/cloudOEPaneId=pricing) (que ofrece un período de prueba gratuito, que no se puede renovar, lo sé por experiencia).
 
 >Después de probar casi todos los servicios anteriores, me da la impresión de que poco hay más allá de Heroku y Openshift. AppFog y Nodejitsu, después de la efervescencia inicial, dan 30 días de prueba solamente. Me falta por probar nitrous.io, pero del resto, al menos los que funcionan con node.js, poco más hay. 
 
