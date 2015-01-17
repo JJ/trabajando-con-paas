@@ -5,7 +5,8 @@ Trabajando con PaaS: Plataformas como servicio
 
 1. Conocer herramientas de desarrollo rápido de aplicaciones web en `node`.
 2. Conocer las diferentes plataformas *freemium* PaaS existentes.
-3. Entender el concepto de PaaS y como se relaciona con los otros niveles de la nube.
+3. Entender el concepto de PaaS y como se relaciona con los otros
+   niveles de la nube. 
 4. Comenzar a usar un PaaS.
 5. Aprender a desplegar automáticamente.
 
@@ -26,11 +27,11 @@ datos, un marco concreto para trabajar (tal como Django o Ruby on
 Rails) y, adicionalmente, un servidor web. 
 
 Esto conlleva una cierta falta de flexibilidad: se pueden usar las
-pilas que hay y el usuario sólo puede subir su aplicación que use esa
-pila, no instalar elementos adicionales que necesiten permisos de
+pilas que proporciona en servicio y el usuario sólo puede subir su
+aplicación que las use, no instalar elementos adicionales que necesiten permisos de
 superusuario. Pero, por otro lado, ofrece la comodidad de tener que
 concentrarse sólo en la aplicación en sí y no en la
-infraestructura. Es, por eso, menos *DevOps* que una solución *IaaS*,
+infraestructura si se trata de una aplicación que use los marcos más comunes. Es, por eso, menos *DevOps* que una solución *IaaS*,
 pero por otro lado también tiene una parte que es la configuración y
 despliegue de la aplicación en sí y los tests que se vayan a usar. 
 
